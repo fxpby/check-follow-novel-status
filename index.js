@@ -44,42 +44,42 @@ const fs = require("fs");
           }
           const titleIndex = titleResult.slice(0, 2);
           if (Number(data) < Number(titleIndex)) {
-            fs.writeFile("./result.txt", titleIndex, (err) => {
-              if (err) {
-                console.error("writeFile error =>", err);
-              }
-              // 创建一个SMTP客户端配置
-              const nodemailerConfig = {
-                // 163邮箱 为smtp.163.com
-                host: "smtp.qq.com",
-                //端口
-                port: 465,
-                auth: {
-                  // 发件人邮箱账号
-                  user: nodemailerConfigUser,
-                  //发件人邮箱的授权码
-                  pass: nodemailerConfigPass,
-                },
-              };
-              const transporter = nodemailer.createTransport(nodemailerConfig);
+            // 创建一个SMTP客户端配置
+            const nodemailerConfig = {
+              // 163邮箱 为smtp.163.com
+              host: "smtp.qq.com",
+              //端口
+              port: 465,
+              auth: {
+                // 发件人邮箱账号
+                user: nodemailerConfigUser,
+                //发件人邮箱的授权码
+                pass: nodemailerConfigPass,
+              },
+            };
+            const transporter = nodemailer.createTransport(nodemailerConfig);
 
-              // 创建一个收件人对象
-              transporter.sendMail(
-                {
-                  from: sendMailFrom,
-                  to: sendMailTo,
-                  subject: `${emailSubject} - ${titleResult}`,
-                  text: `${titleResult}`,
-                },
-                (error, info) => {
-                  if (error) {
-                    return console.log("sendMail error:", error);
-                  }
-                  transporter.close();
-                  console.log("mail sent:", info.response);
+            // 创建一个收件人对象
+            transporter.sendMail(
+              {
+                from: sendMailFrom,
+                to: sendMailTo,
+                subject: `${emailSubject} - ${titleResult}`,
+                text: `${titleResult}`,
+              },
+              (error, info) => {
+                if (error) {
+                  return console.log("sendMail error:", error);
                 }
-              );
-            });
+                transporter.close();
+                console.log("mail sent:", info.response);
+                fs.writeFile("./result.txt", titleIndex, (err) => {
+                  if (err) {
+                    console.error("writeFile error =>", err);
+                  }
+                });
+              }
+            );
           }
         });
       }
