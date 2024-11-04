@@ -39,6 +39,7 @@ const mysql = require("mysql");
   const gotoURL2 = process.env.GO_TO_URL_2;
   const chaptersHTMLElementString = process.env.CHAPTERS_HTML_ELEMENT_STRING;
   const entryHTMLElementString = process.env.ENTRY_HTML_ELEMENT_STRING;
+  const titleHTMLElementString = process.env.TITLE_HTML_ELEMENT_STRING;
   const nodemailerConfigUser = process.env.CONFIG_AUTH_USER;
   const nodemailerConfigPass = process.env.CONFIG_AUTH_PASS;
   const sendMailTo = process.env.SEND_MAIL_TO;
