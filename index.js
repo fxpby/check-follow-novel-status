@@ -96,9 +96,8 @@ const mysql = require("mysql");
         (el) => el.innerHTML
       );
 
-      console.log("chapter && titleResult: ", chapter && titleResult);
-
       if (chapter && titleResult) {
+        console.log("find chapter and titleResult, chapter is ", chapter);
         await updateById({ id: 1, column: "auth", value: "1" });
         const lastChapter = await queryById({ id: 1, column: "last_chapter" });
 
