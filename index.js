@@ -122,6 +122,8 @@ const mysql = require("mysql");
               connection.end();
             }
           );
+        } else {
+          connection.end();
         }
       }
     } catch (err) {
