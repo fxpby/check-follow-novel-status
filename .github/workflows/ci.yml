@@ -55,6 +55,7 @@ jobs:
         env:
           TAG_LIST: ${{ secrets.TAG_LIST }}
           GO_TO_URL: ${{ secrets.GO_TO_URL }}
+          GO_TO_URL_2: ${{ secrets.GO_TO_URL_2 }}
           ENTRY_HTML_ELEMENT_STRING: ${{ secrets.ENTRY_HTML_ELEMENT_STRING }}
           TITLE_HTML_ELEMENT_STRING: ${{ secrets.TITLE_HTML_ELEMENT_STRING }}
           CONFIG_AUTH_USER: ${{ secrets.CONFIG_AUTH_USER }}
