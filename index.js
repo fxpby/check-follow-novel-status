@@ -87,6 +87,7 @@ const mysql = require("mysql");
     const transporter = nodemailer.createTransport(nodemailerConfig);
 
     try {
+      await page.waitForSelector(titleHTMLElementString);
       const chapter = await page.$eval(
         chaptersHTMLElementString,
         (el) => el.innerHTML
