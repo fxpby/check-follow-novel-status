@@ -60,8 +60,11 @@ jobs:
           SEND_MAIL_TO: ${{ secrets.SEND_MAIL_TO }}
           SEND_MAIL_FROM: ${{ secrets.SEND_MAIL_FROM }}
           EMAIL_SUBJECT: ${{ secrets.EMAIL_SUBJECT }}
+          WEB_AUTH_TOKEN: ${{ secrets.WEB_AUTH_TOKEN }}
+          MYSQL_CONFIG: ${{ secrets.MYSQL_CONFIG }}
+          CHAPTERS_HTML_ELEMENT_STRING: ${{ secrets.CHAPTERS_HTML_ELEMENT_STRING }}
 
-      - name: Commit & Push changes
-        uses: actions-js/push@master
-        with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
+      # - name: Commit & Push changes
+      #   uses: actions-js/push@master
+      #   with:
+      #     github_token: ${{ secrets.ACCESS_TOKEN }}
