@@ -95,6 +95,9 @@ const mysql = require("mysql");
         titleHTMLElementString,
         (el) => el.innerHTML
       );
+
+      console.log("chapter && titleResult: ", chapter && titleResult);
+
       if (chapter && titleResult) {
         await updateById({ id: 1, column: "auth", value: "1" });
         const lastChapter = await queryById({ id: 1, column: "last_chapter" });
@@ -120,10 +123,12 @@ const mysql = require("mysql");
                 value: chapter,
               });
               connection.end();
+              return;
             }
           );
         } else {
           connection.end();
+          return;
         }
       }
     } catch (err) {
