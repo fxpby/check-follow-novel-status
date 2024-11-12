@@ -143,15 +143,16 @@ const mysql = require("mysql");
             // });
             // const url = location.origin + lastChapterHTMLElementHref;
             await page.goto(lastChapterHTMLElementHref);
-            const reloadCount = await page.evaluate(() => {
+            let reloadCount = await page.evaluate(() => {
               return localStorage.getItem("reloadCount");
             });
             console.log("line149 reloadCount: ", reloadCount);
+            if (!reloadCount) {
+              reloadCount = 1;
+            }
+            console.log("line153 reloadCount: ", reloadCount);
             await page.evaluate(() => {
-              localStorage.setItem(
-                "reloadCount",
-                reloadCount ? `${Number(reloadCount) + 1}` : "1"
-              );
+              localStorage.setItem("reloadCount", reloadCount);
             });
             await page.reload();
 
