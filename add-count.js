@@ -47,12 +47,14 @@ const mysql = require("mysql");
   const cookieDomain = process.env.COOKIE_DOMAIN;
   const lastChapterHTMLElementString =
     process.env.LAST_CHAPTER_HTML_ELEMENT_STRING;
-  const reloadCount = await page.evaluate(() => {
-    return localStorage.getItem("reloadCount");
-  });
-  const execute = async ({ page, browser } = {}) => {
+
+  const execute = async ({ page, browser, i } = {}) => {
+    const reloadCount = await page.evaluate(() => {
+      return localStorage.getItem("reloadCount");
+    });
     try {
       if (reloadCount) {
+        console.log("browser ", i, ", reloadCount: ", reloadCount);
         if (Number(reloadCount) > 5) {
           connection.end();
           return;
@@ -183,6 +185,6 @@ const mysql = require("mysql");
   }
   execute({ browser: browserList[0], page: pageList[0] });
   Promise.all(
-    browserList.map((browser, i) => execute({ browser, page: pageList[i] }))
+    browserList.map((browser, i) => execute({ browser, page: pageList[i], i }))
   );
 })();
