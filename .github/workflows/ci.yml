@@ -103,7 +103,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Run Script 🎄
-        run: node index.js
+        run: node add-count.js
         env:
           TAG_LIST: ${{ secrets.TAG_LIST }}
           GO_TO_URL: ${{ secrets.GO_TO_URL }}
