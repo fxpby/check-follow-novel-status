@@ -129,20 +129,20 @@ const mysql = require("mysql");
 
           if (lastChapterHTMLElementHref) {
             // 获取页面的位置信息
-            const location = await page.evaluate(() => {
-              return {
-                href: window.location.href,
-                hostname: window.location.hostname,
-                pathname: window.location.pathname,
-                protocol: window.location.protocol,
-                port: window.location.port,
-                search: window.location.search,
-                hash: window.location.hash,
-                origin: window.location.origin,
-              };
-            });
-            const url = location.origin + lastChapterHTMLElementHref;
-            await page.goto(url);
+            // const location = await page.evaluate(() => {
+            //   return {
+            //     href: window.location.href,
+            //     hostname: window.location.hostname,
+            //     pathname: window.location.pathname,
+            //     protocol: window.location.protocol,
+            //     port: window.location.port,
+            //     search: window.location.search,
+            //     hash: window.location.hash,
+            //     origin: window.location.origin,
+            //   };
+            // });
+            // const url = location.origin + lastChapterHTMLElementHref;
+            await page.goto(lastChapterHTMLElementHref);
 
             await page.evaluate(() => {
               localStorage.setItem(
