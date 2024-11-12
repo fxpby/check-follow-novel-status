@@ -47,6 +47,7 @@ const mysql = require("mysql");
   const emailSubject = process.env.EMAIL_SUBJECT;
   const authTokens = process.env.WEB_AUTH_TOKEN;
   const cookieDomain = process.env.COOKIE_DOMAIN;
+  const addCountUrl = process.env.ADD_COUNT_URL;
   const lastChapterHTMLElementString =
     process.env.LAST_CHAPTER_HTML_ELEMENT_STRING;
 
@@ -103,14 +104,13 @@ const mysql = require("mysql");
         if (chapter && titleResult) {
           console.log("find chapter and titleResult, chapter is ", chapter);
           await updateById({ id: 1, column: "auth", value: "1" });
-          const url = await queryById({ id: 1, column: "last_chapter_url" });
-          console.log("url: ", url);
+
           await page.waitForSelector(lastChapterHTMLElementString);
 
-          if (url) {
+          if (addCountUrl) {
             for (let i = 0; i < 30; i += 1) {
               setTimeout(async () => {
-                await page.goto(url);
+                await page.goto(addCountUrl);
                 console.log("goto count: ", i + 1);
               }, 5000);
             }
