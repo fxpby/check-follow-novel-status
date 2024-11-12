@@ -72,7 +72,9 @@ const getData = (n) => {
   const lastChapterHTMLElementString =
     process.env.LAST_CHAPTER_HTML_ELEMENT_STRING;
 
-  const execute = async ({ page, browser, i } = {}) => {
+  const execute = async ({ page, browser, i: browserIndex } = {}) => {
+    console.log("browser index: ", browserIndex);
+
     try {
       await page.goto(gotoURL);
       const entryElement = await page.$(entryHTMLElementString);
@@ -129,14 +131,29 @@ const getData = (n) => {
           await page.waitForSelector(lastChapterHTMLElementString);
 
           if (addCountUrl) {
-            console.log("getData start => ", getData());
+            console.log(
+              "browserIndex-",
+              browserIndex,
+              "getData start => ",
+              getData()
+            );
 
-            for (let i = 0; i < 100; i += 1) {
+            for (let i = 0; i < 10; i += 1) {
               await page.goto(addCountUrl);
               await sleep(1000);
-              console.log("goto count: ", i + 1);
+              console.log(
+                "browserIndex-",
+                browserIndex,
+                " goto count: ",
+                i + 1
+              );
             }
-            console.log("getData end => ", getData());
+            console.log(
+              "browserIndex-",
+              browserIndex,
+              "getData end => ",
+              getData()
+            );
             connection.end();
             return;
           }
@@ -173,7 +190,7 @@ const getData = (n) => {
     }
   };
 
-  const loop = 1;
+  const loop = 3;
 
   const browserList = [];
   const pageList = [];
