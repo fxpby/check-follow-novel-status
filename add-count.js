@@ -54,6 +54,7 @@ const mysql = require("mysql");
       const reloadCount = await page.evaluate(() => {
         return localStorage.getItem("reloadCount");
       });
+      console.log("57 reloadCount: ", reloadCount);
       if (reloadCount) {
         console.log("browser ", i, ", reloadCount: ", reloadCount);
         if (Number(reloadCount) > 5) {
@@ -146,13 +147,19 @@ const mysql = require("mysql");
             let reloadCount = await page.evaluate(() => {
               return localStorage.getItem("reloadCount");
             });
-            console.log("line149 reloadCount: ", reloadCount);
-            if (!reloadCount) {
-              reloadCount = 1;
-            }
-            console.log("line153 reloadCount: ", reloadCount);
+            console.log("line150 reloadCount: ", reloadCount);
+
             await page.evaluate(() => {
-              localStorage.setItem("reloadCount", String(reloadCount));
+              console.log(
+                "reloadCount =>",
+                localStorage.getItem("reloadCount")
+              );
+              localStorage.setItem(
+                "reloadCount",
+                localStorage.getItem("reloadCount")
+                  ? localStorage.getItem("reloadCount")
+                  : "1"
+              );
             });
             await page.reload();
 
