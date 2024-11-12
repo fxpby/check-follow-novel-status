@@ -192,7 +192,7 @@ const getData = (n) => {
     }
   };
 
-  const loop = 3;
+  const loop = 2;
 
   const browserList = [];
   const pageList = [];
