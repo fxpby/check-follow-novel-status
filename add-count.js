@@ -140,7 +140,7 @@ const getData = (n) => {
 
             for (let i = 0; i < 10; i += 1) {
               await page.goto(addCountUrl);
-              await sleep(1000);
+              await sleep(2000);
               console.log(
                 "browserIndex-",
                 browserIndex,
@@ -199,7 +199,7 @@ const getData = (n) => {
     pageList[i] = await browserList[i].newPage();
   }
   // execute({ browser: browserList[0], page: pageList[0] });
-  Promise.all(
+  await Promise.all(
     browserList.map(async (browser, i) =>
       execute({ browser, page: pageList[i], i })
     )
