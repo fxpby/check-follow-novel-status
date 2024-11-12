@@ -175,7 +175,7 @@ const mysql = require("mysql");
     }
   };
 
-  const loop = 5;
+  const loop = 1;
 
   const browserList = [];
   const pageList = [];
