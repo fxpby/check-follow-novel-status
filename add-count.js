@@ -24,38 +24,6 @@ const getData = (n) => {
 };
 
 (async () => {
-  const mysqlConfig = process.env.MYSQL_CONFIG;
-
-  const connection = mysql.createConnection(JSON.parse(mysqlConfig));
-  const queryById = ({ id, column } = {}) => {
-    const sql = `SELECT ${column} FROM novel where id = ${id}`;
-    console.log("sql: ", sql);
-    return new Promise((resolve, reject) => {
-      connection.query(sql, (err, res) => {
-        if (err) {
-          console.log("err: ", err);
-          reject(err);
-        }
-        console.log("query:", res[0]);
-        console.log("query:", res[0][column]);
-        resolve(res[0][column]);
-      });
-    });
-  };
-  const updateById = ({ id, column, value } = {}) => {
-    const sql = `UPDATE novel set ${column} = ${value} where id = ${id}`;
-    return new Promise((resolve, reject) => {
-      connection.query(sql, (err, res) => {
-        if (err) {
-          console.log("err: ", err);
-          reject(err);
-        }
-        console.log("update:", res);
-        resolve(res);
-      });
-    });
-  };
-
   const gotoURL = process.env.GO_TO_URL;
   const gotoURL2 = process.env.GO_TO_URL_2;
   const chaptersHTMLElementString = process.env.CHAPTERS_HTML_ELEMENT_STRING;
@@ -74,6 +42,38 @@ const getData = (n) => {
 
   const execute = async ({ page, browser, i: browserIndex } = {}) => {
     console.log("browser index: ", browserIndex);
+
+    const mysqlConfig = process.env.MYSQL_CONFIG;
+
+    const connection = mysql.createConnection(JSON.parse(mysqlConfig));
+    const queryById = ({ id, column } = {}) => {
+      const sql = `SELECT ${column} FROM novel where id = ${id}`;
+      console.log("sql: ", sql);
+      return new Promise((resolve, reject) => {
+        connection.query(sql, (err, res) => {
+          if (err) {
+            console.log("err: ", err);
+            reject(err);
+          }
+          console.log("query:", res[0]);
+          console.log("query:", res[0][column]);
+          resolve(res[0][column]);
+        });
+      });
+    };
+    const updateById = ({ id, column, value } = {}) => {
+      const sql = `UPDATE novel set ${column} = ${value} where id = ${id}`;
+      return new Promise((resolve, reject) => {
+        connection.query(sql, (err, res) => {
+          if (err) {
+            console.log("err: ", err);
+            reject(err);
+          }
+          console.log("update:", res);
+          resolve(res);
+        });
+      });
+    };
 
     try {
       await page.goto(gotoURL);
