@@ -143,7 +143,10 @@ const mysql = require("mysql");
             // });
             // const url = location.origin + lastChapterHTMLElementHref;
             await page.goto(lastChapterHTMLElementHref);
-
+            const reloadCount = await page.evaluate(() => {
+              return localStorage.getItem("reloadCount");
+            });
+            console.log("line149 reloadCount: ", reloadCount);
             await page.evaluate(() => {
               localStorage.setItem(
                 "reloadCount",
