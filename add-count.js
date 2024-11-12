@@ -181,7 +181,7 @@ const mysql = require("mysql");
   const pageList = [];
   for (let i = 0; i < loop; i += 1) {
     browserList[i] = await puppeteer.launch({ headless: true });
-    pageList[i] = await browser.newPage();
+    pageList[i] = await browserList[i].newPage();
   }
   execute({ browser: browserList[0], page: pageList[0] });
   Promise.all(
