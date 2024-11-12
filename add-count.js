@@ -183,8 +183,10 @@ const mysql = require("mysql");
     browserList[i] = await puppeteer.launch({ headless: true });
     pageList[i] = await browserList[i].newPage();
   }
-  execute({ browser: browserList[0], page: pageList[0] });
+  // execute({ browser: browserList[0], page: pageList[0] });
   Promise.all(
-    browserList.map((browser, i) => execute({ browser, page: pageList[i], i }))
+    browserList.map(async (browser, i) =>
+      execute({ browser, page: pageList[i], i })
+    )
   );
 })();
