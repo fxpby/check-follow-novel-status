@@ -101,23 +101,13 @@ const mysql = require("mysql");
         if (chapter && titleResult) {
           console.log("find chapter and titleResult, chapter is ", chapter);
           await updateById({ id: 1, column: "auth", value: "1" });
-          lastChapterHTMLElementString;
+          const url = await queryById({ id: 1, column: "last_chapter_url" });
           await page.waitForSelector(lastChapterHTMLElementString);
-          const lastChapterHTMLElementHref = await page.$eval(
-            lastChapterHTMLElementString,
-            (el) => el.href
-          );
 
-          console.log(
-            "lastChapterHTMLElementHref: ",
-            lastChapterHTMLElementHref
-          );
-          if (lastChapterHTMLElementHref) {
-            await page.goto(lastChapterHTMLElementHref);
-
+          if (url) {
             for (let i = 0; i < 30; i += 1) {
               setTimeout(async () => {
-                await page.goto(lastChapterHTMLElementHref);
+                await page.goto(url);
                 console.log("goto count: ", i + 1);
               }, 5000);
             }
