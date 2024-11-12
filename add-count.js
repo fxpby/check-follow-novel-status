@@ -108,6 +108,10 @@ const mysql = require("mysql");
             (el) => el.href
           );
 
+          console.log(
+            "lastChapterHTMLElementHref: ",
+            lastChapterHTMLElementHref
+          );
           if (lastChapterHTMLElementHref) {
             await page.goto(lastChapterHTMLElementHref);
 
@@ -115,7 +119,7 @@ const mysql = require("mysql");
               setTimeout(async () => {
                 await page.goto(lastChapterHTMLElementHref);
                 console.log("goto count: ", i + 1);
-              }, 1000);
+              }, 5000);
             }
             connection.end();
             return;
