@@ -51,26 +51,6 @@ const mysql = require("mysql");
   const execute = async ({ page, browser, i } = {}) => {
     try {
       await page.goto(gotoURL);
-      const reloadCount = await page.evaluate(() => {
-        return localStorage.getItem("reloadCount");
-      });
-      console.log("57 reloadCount: ", reloadCount);
-      if (reloadCount) {
-        console.log("browser ", i, ", reloadCount: ", reloadCount);
-        if (Number(reloadCount) > 5) {
-          connection.end();
-          return;
-        } else {
-          await page.evaluate(() => {
-            localStorage.setItem(
-              "reloadCount",
-              reloadCount ? `${Number(reloadCount) + 1}` : "1"
-            );
-          });
-          await page.reload();
-        }
-        return;
-      }
       const entryElement = await page.$(entryHTMLElementString);
       if (entryElement) {
         entryElement.click();
@@ -129,40 +109,14 @@ const mysql = require("mysql");
           );
 
           if (lastChapterHTMLElementHref) {
-            // 获取页面的位置信息
-            // const location = await page.evaluate(() => {
-            //   return {
-            //     href: window.location.href,
-            //     hostname: window.location.hostname,
-            //     pathname: window.location.pathname,
-            //     protocol: window.location.protocol,
-            //     port: window.location.port,
-            //     search: window.location.search,
-            //     hash: window.location.hash,
-            //     origin: window.location.origin,
-            //   };
-            // });
-            // const url = location.origin + lastChapterHTMLElementHref;
             await page.goto(lastChapterHTMLElementHref);
-            let reloadCount = await page.evaluate(() => {
-              return localStorage.getItem("reloadCount");
-            });
-            console.log("line150 reloadCount: ", reloadCount);
 
-            await page.evaluate(() => {
-              console.log(
-                "reloadCount =>",
-                localStorage.getItem("reloadCount")
-              );
-              localStorage.setItem(
-                "reloadCount",
-                localStorage.getItem("reloadCount")
-                  ? localStorage.getItem("reloadCount")
-                  : "1"
-              );
-            });
-            await page.reload();
-
+            for (let i = 0; i < 30; i += 1) {
+              setTimeout(async () => {
+                await page.goto(lastChapterHTMLElementHref);
+                console.log("goto count: ", i + 1);
+              }, 1000);
+            }
             connection.end();
             return;
           }
