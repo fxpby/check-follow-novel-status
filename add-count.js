@@ -8,13 +8,15 @@ const mysql = require("mysql");
   const connection = mysql.createConnection(JSON.parse(mysqlConfig));
   const queryById = ({ id, column } = {}) => {
     const sql = `SELECT ${column} FROM novel where id = ${id}`;
+    console.log("sql: ", sql);
     return new Promise((resolve, reject) => {
       connection.query(sql, (err, res) => {
         if (err) {
           console.log("err: ", err);
           reject(err);
         }
-        console.log("update:", res[0][column]);
+        console.log("query:", res[0]);
+        console.log("query:", res[0][column]);
         resolve(res[0][column]);
       });
     });
@@ -102,6 +104,7 @@ const mysql = require("mysql");
           console.log("find chapter and titleResult, chapter is ", chapter);
           await updateById({ id: 1, column: "auth", value: "1" });
           const url = await queryById({ id: 1, column: "last_chapter_url" });
+          console.log("url: ", url);
           await page.waitForSelector(lastChapterHTMLElementString);
 
           if (url) {
