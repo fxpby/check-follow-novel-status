@@ -108,12 +108,13 @@ const mysql = require("mysql");
           await page.waitForSelector(lastChapterHTMLElementString);
 
           if (addCountUrl) {
-            for (let i = 0; i < 30; i += 1) {
-              setTimeout(async () => {
-                await page.goto(addCountUrl);
-                console.log("goto count: ", i + 1);
-              }, 5000);
-            }
+            // for (let i = 0; i < 30; i += 1) {
+            //   setTimeout(async () => {
+            // await page.goto(gotoURL2);
+            await page.goto(addCountUrl);
+            //     console.log("goto count: ", i + 1);
+            //   }, 5000);
+            // }
             connection.end();
             return;
           }
