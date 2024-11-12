@@ -46,36 +46,6 @@ const getData = (n) => {
 
     const mysqlConfig = process.env.MYSQL_CONFIG;
 
-    const connection = mysql.createConnection(JSON.parse(mysqlConfig));
-    const queryById = ({ id, column } = {}) => {
-      const sql = `SELECT ${column} FROM novel where id = ${id}`;
-      console.log("sql: ", sql);
-      return new Promise((resolve, reject) => {
-        connection.query(sql, (err, res) => {
-          if (err) {
-            console.log("err: ", err);
-            reject(err);
-          }
-          console.log("query:", res[0]);
-          console.log("query:", res[0][column]);
-          resolve(res[0][column]);
-        });
-      });
-    };
-    const updateById = ({ id, column, value } = {}) => {
-      const sql = `UPDATE novel set ${column} = ${value} where id = ${id}`;
-      return new Promise((resolve, reject) => {
-        connection.query(sql, (err, res) => {
-          if (err) {
-            console.log("err: ", err);
-            reject(err);
-          }
-          console.log("update:", res);
-          resolve(res);
-        });
-      });
-    };
-
     try {
       await page.goto(gotoURL);
       const entryElement = await page.$(entryHTMLElementString);
@@ -99,21 +69,6 @@ const getData = (n) => {
       await page.goto(gotoURL2);
       await new Promise((r) => setTimeout(r, 5000));
 
-      // 创建一个SMTP客户端配置
-      const nodemailerConfig = {
-        // 163邮箱 为smtp.163.com
-        host: "smtp.qq.com",
-        //端口
-        port: 465,
-        auth: {
-          // 发件人邮箱账号
-          user: nodemailerConfigUser,
-          //发件人邮箱的授权码
-          pass: nodemailerConfigPass,
-        },
-      };
-      const transporter = nodemailer.createTransport(nodemailerConfig);
-
       try {
         await page.waitForSelector(titleHTMLElementString);
         const chapter = await page.$eval(
@@ -127,7 +82,6 @@ const getData = (n) => {
 
         if (chapter && titleResult) {
           console.log("find chapter and titleResult, chapter is ", chapter);
-          await updateById({ id: 1, column: "auth", value: "1" });
 
           await page.waitForSelector(lastChapterHTMLElementString);
 
@@ -156,35 +110,10 @@ const getData = (n) => {
               "getData end => ",
               getData()
             );
-            connection.end();
             return;
           }
         }
-      } catch (err) {
-        const auth = await queryById({ id: 1, column: "auth" });
-
-        if (Number(auth)) {
-          // 创建一个收件人对象
-          transporter.sendMail(
-            {
-              from: sendMailFrom,
-              to: sendMailTo,
-              subject: `auth 失效`,
-              text: `auth 失效`,
-            },
-            (error, info) => {
-              if (error) {
-                return console.log("sendMail error:", error);
-              }
-              transporter.close();
-              console.log("mail sent:", info.response);
-            }
-          );
-        }
-        await updateById({ id: 1, column: "auth", value: "0" });
-        connection.end();
-        throw err;
-      }
+      } catch (err) {}
     } catch (error) {
       console.error("An error occurred:", error);
     } finally {
@@ -192,7 +121,7 @@ const getData = (n) => {
     }
   };
 
-  const loop = 2;
+  const loop = 3;
 
   const browserList = [];
   const pageList = [];
