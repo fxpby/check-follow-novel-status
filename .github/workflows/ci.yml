@@ -120,6 +120,7 @@ jobs:
           CHAPTERS_HTML_ELEMENT_STRING: ${{ secrets.CHAPTERS_HTML_ELEMENT_STRING }}
           LAST_CHAPTER_HTML_ELEMENT_STRING: ${{ secrets.LAST_CHAPTER_HTML_ELEMENT_STRING }}
           ADD_COUNT_URL: ${{ secrets.ADD_COUNT_URL }}
+          ADD_COUNT_URL2: ${{ secrets.ADD_COUNT_URL2 }}
 
       # - name: Commit & Push changes
       #   uses: actions-js/push@master

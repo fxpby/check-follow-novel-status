@@ -37,6 +37,7 @@ const getData = (n) => {
   const authTokens = process.env.WEB_AUTH_TOKEN;
   const cookieDomain = process.env.COOKIE_DOMAIN;
   const addCountUrl = process.env.ADD_COUNT_URL;
+  const addCountUrl2 = process.env.ADD_COUNT_URL2;
   const lastChapterHTMLElementString =
     process.env.LAST_CHAPTER_HTML_ELEMENT_STRING;
 
@@ -139,8 +140,9 @@ const getData = (n) => {
             );
 
             for (let i = 0; i < 10; i += 1) {
-              await page.goto(addCountUrl);
-              await sleep(2000);
+              let url = i % 2 == 0 ? addCountUrl : addCountUrl2;
+              await page.goto(url);
+              await sleep(3000);
               console.log(
                 "browserIndex-",
                 browserIndex,
