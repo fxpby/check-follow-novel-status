@@ -49,10 +49,11 @@ const mysql = require("mysql");
     process.env.LAST_CHAPTER_HTML_ELEMENT_STRING;
 
   const execute = async ({ page, browser, i } = {}) => {
-    const reloadCount = await page.evaluate(() => {
-      return localStorage.getItem("reloadCount");
-    });
     try {
+      await page.goto(gotoURL);
+      const reloadCount = await page.evaluate(() => {
+        return localStorage.getItem("reloadCount");
+      });
       if (reloadCount) {
         console.log("browser ", i, ", reloadCount: ", reloadCount);
         if (Number(reloadCount) > 5) {
@@ -69,7 +70,6 @@ const mysql = require("mysql");
         }
         return;
       }
-      await page.goto(gotoURL);
       const entryElement = await page.$(entryHTMLElementString);
       if (entryElement) {
         entryElement.click();
