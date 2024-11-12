@@ -7,6 +7,22 @@ const sleep = (gap) =>
     setTimeout(resolve, gap);
   });
 
+const getData = (n) => {
+  let now = n ? new Date(n) : new Date(),
+    y = now.getFullYear(),
+    m = now.getMonth() + 1,
+    d = now.getDate();
+  return (
+    y +
+    "-" +
+    (m < 10 ? "0" + m : m) +
+    "-" +
+    (d < 10 ? "0" + d : d) +
+    " " +
+    now.toTimeString().substr(0, 8)
+  );
+};
+
 (async () => {
   const mysqlConfig = process.env.MYSQL_CONFIG;
 
@@ -113,14 +129,13 @@ const sleep = (gap) =>
           await page.waitForSelector(lastChapterHTMLElementString);
 
           if (addCountUrl) {
-            for (let i = 0; i < 10; i += 1) {
-              //   setTimeout(async () => {
-              // await page.goto(gotoURL2);
+            console.log("getData start => ", getData());
+
+            for (let i = 0; i < 100; i += 1) {
               await page.goto(addCountUrl);
-              await sleep(1000);
               console.log("goto count: ", i + 1);
-              //   }, 5000);
             }
+            console.log("getData end => ", getData());
             connection.end();
             return;
           }
