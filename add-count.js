@@ -152,7 +152,7 @@ const mysql = require("mysql");
             }
             console.log("line153 reloadCount: ", reloadCount);
             await page.evaluate(() => {
-              localStorage.setItem("reloadCount", reloadCount);
+              localStorage.setItem("reloadCount", String(reloadCount));
             });
             await page.reload();
 
