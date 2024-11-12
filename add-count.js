@@ -133,6 +133,7 @@ const getData = (n) => {
 
             for (let i = 0; i < 100; i += 1) {
               await page.goto(addCountUrl);
+              await sleep(1000);
               console.log("goto count: ", i + 1);
             }
             console.log("getData end => ", getData());
