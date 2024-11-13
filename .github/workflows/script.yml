@@ -1,0 +1,78 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Script CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  # schedule:
+  #   - cron: "*/10 10-16 * * *" # 每隔 10 分钟在每日 18:00 - 24:00 之间运行
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  repository_dispatch:
+    types: [script-add-count]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+
+  script-add-count:
+    if: github.event.action == 'script-add-count'
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout 🐤
+        uses: actions/checkout@v4
+
+        # 安装 Node 20
+      - name: use Node.js 20.10.0 🐣
+        # 使用action库  actions/setup-node安装node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.10.0"
+
+      # 缓存 npm node_modules
+      - name: Cache dependencies 🐤
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-cache-
+
+      # 安装依赖 npm
+      - name: Install dependencies 🎄
+        # 如果没有命中缓存才执行 npm install
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run: npm install
+
+      # Runs a set of commands using the runners shell
+      - name: Run Script 🎄
+        run: node add-count.js
+        env:
+          TAG_LIST: ${{ secrets.TAG_LIST }}
+          GO_TO_URL: ${{ secrets.GO_TO_URL }}
+          GO_TO_URL_2: ${{ secrets.GO_TO_URL_2 }}
+          ENTRY_HTML_ELEMENT_STRING: ${{ secrets.ENTRY_HTML_ELEMENT_STRING }}
+          TITLE_HTML_ELEMENT_STRING: ${{ secrets.TITLE_HTML_ELEMENT_STRING }}
+          CONFIG_AUTH_USER: ${{ secrets.CONFIG_AUTH_USER }}
+          CONFIG_AUTH_PASS: ${{ secrets.CONFIG_AUTH_PASS }}
+          SEND_MAIL_TO: ${{ secrets.SEND_MAIL_TO }}
+          SEND_MAIL_FROM: ${{ secrets.SEND_MAIL_FROM }}
+          EMAIL_SUBJECT: ${{ secrets.EMAIL_SUBJECT }}
+          WEB_AUTH_TOKEN: ${{ secrets.WEB_AUTH_TOKEN }}
+          MYSQL_CONFIG: ${{ secrets.MYSQL_CONFIG }}
+          CHAPTERS_HTML_ELEMENT_STRING: ${{ secrets.CHAPTERS_HTML_ELEMENT_STRING }}
+          LAST_CHAPTER_HTML_ELEMENT_STRING: ${{ secrets.LAST_CHAPTER_HTML_ELEMENT_STRING }}
+          ADD_COUNT_URL: ${{ secrets.ADD_COUNT_URL }}
+          ADD_COUNT_URL2: ${{ secrets.ADD_COUNT_URL2 }}
+
+      # - name: Commit & Push changes
+      #   uses: actions-js/push@master
+      #   with:
+      #     github_token: ${{ secrets.ACCESS_TOKEN }}
