@@ -5,20 +5,6 @@ const sleep = (gap) =>
     setTimeout(resolve, gap);
   });
 
-const randomNum = (minNum, maxNum) => {
-  switch (arguments.length) {
-    case 1:
-      return parseInt(Math.random() * minNum + 1, 10);
-      break;
-    case 2:
-      return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
-      break;
-    default:
-      return 0;
-      break;
-  }
-};
-
 const getData = (n) => {
   let now = n ? new Date(n) : new Date(),
     y = now.getFullYear(),
@@ -109,7 +95,7 @@ const getData = (n) => {
             );
 
             for (let i = 0; i < 100; i += 1) {
-              const num = randomNum(0, 28);
+              let num = Math.floor(Math.random() * 29);
               const url = addCountUrlList[num];
               await page.goto(url);
               await sleep(3000);
