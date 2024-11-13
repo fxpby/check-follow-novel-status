@@ -94,7 +94,7 @@ const getData = (n) => {
             for (let i = 0; i < 400; i += 1) {
               let url = i % 2 == 0 ? addCountUrl : addCountUrl2;
               await page.goto(url);
-              await sleep(2000);
+              await sleep(3000);
               console.log(
                 "browserIndex-",
                 browserIndex,
@@ -119,7 +119,7 @@ const getData = (n) => {
     }
   };
 
-  const loop = 3;
+  const loop = 2;
 
   const browserList = [];
   const pageList = [];
