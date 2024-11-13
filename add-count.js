@@ -41,7 +41,7 @@ const getData = (n) => {
 
   const execute = async ({ page, browser, i: browserIndex } = {}) => {
     console.log("browser index: ", browserIndex);
-
+    await page.setDefaultNavigationTimeout(60000);
     const mysqlConfig = process.env.MYSQL_CONFIG;
 
     try {
