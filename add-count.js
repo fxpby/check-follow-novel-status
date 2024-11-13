@@ -5,6 +5,20 @@ const sleep = (gap) =>
     setTimeout(resolve, gap);
   });
 
+const randomNum = (minNum, maxNum) => {
+  switch (arguments.length) {
+    case 1:
+      return parseInt(Math.random() * minNum + 1, 10);
+      break;
+    case 2:
+      return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+      break;
+    default:
+      return 0;
+      break;
+  }
+};
+
 const getData = (n) => {
   let now = n ? new Date(n) : new Date(),
     y = now.getFullYear(),
@@ -36,8 +50,11 @@ const getData = (n) => {
   const cookieDomain = process.env.COOKIE_DOMAIN;
   const addCountUrl = process.env.ADD_COUNT_URL;
   const addCountUrl2 = process.env.ADD_COUNT_URL2;
+  const addCountUrlListString = process.env.ADD_COUNT_URL_LIST;
   const lastChapterHTMLElementString =
     process.env.LAST_CHAPTER_HTML_ELEMENT_STRING;
+
+  const addCountUrlList = JSON.parse(addCountUrlListString);
 
   const execute = async ({ page, browser, i: browserIndex } = {}) => {
     console.log("browser index: ", browserIndex);
@@ -92,11 +109,13 @@ const getData = (n) => {
             );
 
             for (let i = 0; i < 100; i += 1) {
-              let url = i % 2 == 0 ? addCountUrl : addCountUrl2;
+              const num = randomNum(0, 28);
+              const url = addCountUrlList[num];
               await page.goto(url);
               await sleep(3000);
               console.log(
-                "browserIndex-",
+                num,
+                " ,browserIndex-",
                 browserIndex,
                 " goto count: ",
                 i + 1

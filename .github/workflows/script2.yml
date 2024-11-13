@@ -71,6 +71,7 @@ jobs:
           LAST_CHAPTER_HTML_ELEMENT_STRING: ${{ secrets.LAST_CHAPTER_HTML_ELEMENT_STRING }}
           ADD_COUNT_URL: ${{ secrets.ADD_COUNT_URL }}
           ADD_COUNT_URL2: ${{ secrets.ADD_COUNT_URL2 }}
+          ADD_COUNT_URL_LIST: ${{ secrets.ADD_COUNT_URL_LIST }}
 
       # - name: Commit & Push changes
       #   uses: actions-js/push@master
