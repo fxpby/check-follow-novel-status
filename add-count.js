@@ -111,7 +111,9 @@ const getData = (n) => {
             return;
           }
         }
-      } catch (err) {}
+      } catch (err) {
+        throw err;
+      }
     } catch (error) {
       console.error("An error occurred:", error);
     } finally {
