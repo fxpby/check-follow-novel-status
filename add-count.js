@@ -1,6 +1,4 @@
 const puppeteer = require("puppeteer");
-const nodemailer = require("nodemailer");
-const mysql = require("mysql");
 
 const sleep = (gap) =>
   new Promise((resolve) => {
@@ -93,10 +91,10 @@ const getData = (n) => {
               getData()
             );
 
-            for (let i = 0; i < 100; i += 1) {
+            for (let i = 0; i < 400; i += 1) {
               let url = i % 2 == 0 ? addCountUrl : addCountUrl2;
               await page.goto(url);
-              await sleep(3000);
+              await sleep(2000);
               console.log(
                 "browserIndex-",
                 browserIndex,
