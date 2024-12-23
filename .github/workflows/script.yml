@@ -37,13 +37,13 @@ jobs:
           node-version: "20.10.0"
 
       # 缓存 npm node_modules
-      # - name: Cache dependencies 🐤
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ~/.npm
-      #     key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-npm-cache-
+      - name: Cache dependencies 🐤
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-cache-
 
       # rm
       - name: rm package-lock.json 🎄
@@ -52,7 +52,7 @@ jobs:
       # 安装依赖 npm
       - name: Install dependencies 🎄
         # 如果没有命中缓存才执行 npm install
-        # if: steps.cache-deps.outputs.cache-hit != 'true'
+        if: steps.cache-deps.outputs.cache-hit != 'true'
         run: npm install
 
       # Runs a set of commands using the runners shell
