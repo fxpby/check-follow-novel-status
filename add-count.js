@@ -128,7 +128,7 @@ const getData = (n) => {
   for (let i = 0; i < loop; i += 1) {
     browserList[i] = await puppeteer.launch({
       headless: true,
-      // args: ["--no-sandbox"],
+      args: ["--no-sandbox"],
     });
     pageList[i] = await browserList[i].newPage();
   }
