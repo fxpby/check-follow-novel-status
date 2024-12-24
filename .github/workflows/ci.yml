@@ -99,6 +99,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-cache-
 
+      # rm package-lock.json
+      - name: rm package-lock.json 🎄
+        run: rm package-lock.json
+
       # 安装依赖 npm
       - name: Install dependencies 🎄
         # 如果没有命中缓存才执行 npm install
