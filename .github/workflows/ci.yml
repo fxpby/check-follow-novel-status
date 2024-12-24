@@ -44,8 +44,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-cache-
 
-      # rm
-      - name: rm package-lock.json 🎄
+      # rm package-lock.json
+      - name: Rm package-lock.json 🎄
         run: rm package-lock.json
 
       # 安装依赖 npm
